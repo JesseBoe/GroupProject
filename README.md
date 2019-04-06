@@ -1,2 +1,2 @@
 # GroupProject
-Please go well
+Whoa! This is awesome!
