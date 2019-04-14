@@ -1,0 +1,37 @@
+.jumbotron {
+    font-family: 'Pacifico', cursive;
+    background: rgb(255,255,255);
+    background: linear-gradient(63deg, rgba(255,255,255,1) 42%, rgba(255,255,255,0.3618040966386554) 100%);
+}
+
+body {
+    background:
+   repeating-linear-gradient(
+        45deg,
+        transparent 0,
+        transparent 25%,
+        tomato 0,
+        rgba(216, 154, 143, 0.8) 50%
+    ), white;
+    background-blend-mode: multiply;
+}
+
+.card {
+    margin-bottom:1rem;
+}
+
+#recipe-name {
+    font-size:18pt;
+    font-weight:bold;
+}
+
+.btn, .card-col {
+    margin:0rem;
+    padding:0rem;
+}
+
+#servings, #time {
+    text-align: center;
+}
+
+

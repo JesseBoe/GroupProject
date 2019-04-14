@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     
     //The base sure for spoonacular.
