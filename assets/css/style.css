@@ -1,7 +1,17 @@
 .jumbotron {
-    font-family: 'Pacifico', cursive;
     background: rgb(255,255,255);
     background: linear-gradient(63deg, rgba(255,255,255,1) 42%, rgba(255,255,255,0.3618040966386554) 100%);
+    padding-bottom:2rem;
+    padding-top:2rem;
+}
+
+.display-3 {
+    font-family: 'Pacifico', cursive;
+}
+
+#submit-button {
+    font-family: 'Pacifico', cursive;
+    padding:5px;
 }
 
 body {

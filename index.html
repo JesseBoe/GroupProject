@@ -21,7 +21,7 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
@@ -29,8 +29,29 @@
 <body>
   <!-- Jumbotron header. -->
   <div class="jumbotron jumbotron-fluid">
-    <div class="container header">
+    <div class="container">
       <h1 class="display-3">Tastes & Tunes</h1>
+
+      <div class="input-group mb-3">
+        <select class="custom-select cuisine-select" id="inputGroupSelect02">
+          <option selected>Choose your cuisine...</option>
+          <option value="1">OPTIONS GO HERE</option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <select class="custom-select type-select" id="inputGroupSelect02">
+          <option selected>Choose your type of meal...</option>
+          <option value="1">Breakfast</option>
+          <option value="2">Lunch</option>
+          <option value="3">Appetizer/Small Plate</option>
+          <option value="3">Drink</option>
+          <option value="3">Main Course</option>
+        </select>
+      </div>
+      
+      <button type="button" class="btn btn-danger" id="submit-button">Submit</button>
+
     </div>
   </div>
 
@@ -221,6 +242,7 @@
   </div>
 
   <script src="assets/javascript/logic.js"></script>
-  
+
 </body>
+
 </html>
