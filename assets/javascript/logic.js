@@ -1,6 +1,6 @@
 
-$(document).ready(function(){
-    
+$(document).ready(function () {
+
     //The base sure for spoonacular.
     var spoonacularBaseURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search/?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250';
     var spoonacularSearchByIdURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/';
@@ -19,8 +19,9 @@ $(document).ready(function(){
     //TODO: Link this to a real button
     $("#FakeButton").on("click", function () {
         SearchSpoonacular($('#query-input').val(), $('#cuisine-input').val(), $('#type-input').val(), 3);
+        // calling the display youtube playlists function while outlining cuisineInput variable
+        displayYoutubePlaylists($('#cuisine-input').val() + " music");
     })
-
 
     function SearchSpoonacular(query, cuisine, type, numberToGet) {
 
@@ -57,4 +58,34 @@ $(document).ready(function(){
             console.log(response);
         })
     }
+
+    function displayYoutubePlaylists(cuisineInput) {
+
+        var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
+        var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
+
+        // Creating an ajax call for when the submit button is clicked
+        $.ajax({
+            url: youtubeQueryURL,
+            headers: { "Accept": "application/jason" },
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+
+            // assigning the jquery to a variable
+            var playlist = $('.youtube-playlists');
+
+            // for every response (playlist) returned:
+            for (var i = 0; i < response.items.length; i++) {
+
+                // get the playlist IDs from the youtube API
+                var playlistID = response.items[i].id.playlistId;
+
+                // embed youtube playlist into HTML card
+                playlist.append('<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+            };
+        });
+    }
+    // TODO: remove this line after we have a submit button - this code is to show what the playlist will look like
+    displayYoutubePlaylists("indian music");
 })
