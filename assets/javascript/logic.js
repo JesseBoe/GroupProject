@@ -82,7 +82,7 @@ $(document).ready(function () {
                 var playlistID = response.items[i].id.playlistId;
 
                 // embed youtube playlist into HTML card
-                playlist.append('<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+                playlist.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
     }
