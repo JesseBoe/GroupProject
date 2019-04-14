@@ -1,0 +1,16 @@
+Snackify Firebase Acct
+
+UID:  uwashbootcamp@gmail.com
+PWD: Td0mhp2r
+
+
+  var config = {
+    apiKey: "AIzaSyDw-EkMjzTgjFrrEgj--Uz6Iw4H078bBk0",
+    authDomain: "snackify-cea62.firebaseapp.com",
+    databaseURL: "https://snackify-cea62.firebaseio.com",
+    projectId: "snackify-cea62",
+    storageBucket: "snackify-cea62.appspot.com",
+    messagingSenderId: "334536077143"
+  };
+  firebase.initializeApp(config);
+
