@@ -6,7 +6,7 @@
 
 body {
     background:
-   repeating-linear-gradient(
+    repeating-linear-gradient(
         45deg,
         transparent 0,
         transparent 25%,
@@ -32,6 +32,10 @@ body {
 
 #servings, #time {
     text-align: center;
+}
+
+.recipe-title-area:hover {
+    color:tomato;
 }
 
 
