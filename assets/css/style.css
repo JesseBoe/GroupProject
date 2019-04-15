@@ -24,7 +24,10 @@ body {
         rgba(216, 154, 143, 0.8) 50%
     ), white;
     background-blend-mode: multiply;
+    /* Our gradient breaks if the height is too low? */
+    min-height: 1000px;
 }
+
 
 .card {
     margin-bottom:1rem;
