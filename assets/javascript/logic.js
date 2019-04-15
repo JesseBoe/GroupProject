@@ -6,12 +6,11 @@ $(document).ready(function () {
     var spoonacularSearchByIdURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/';
 
     //We can use this for input validation
-    var geographicalCusineList = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican', 'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american'];
-
+    var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
     var recipesCount = 0;
+
     for (var i =0; i < geographicalCusineList.length; i++) {
         $('.cuisine-select').append('<option value='+geographicalCusineList[i]+'>'+geographicalCusineList[i]+'</option>');
-        console.log($('.cuisine-select').val());
     }
 
     //Search spoonacular and retrieve information about dishes. 
@@ -20,17 +19,30 @@ $(document).ready(function () {
     //type: One of the following: main course, side dish, dessert, appetizer, salad, bread, breakfast, soup, beverage, sauce, or drink.
     //offset: Unused at this point in time. Maybe look into lazy loading cards as the user srolls down? This is probably pretty complicated for both code and front end
 
-    SearchSpoonacular("", "French", "", 10);
 
     // when the submit button is clicked, grab these values
     $("#submit-button").on("click", function () {
-        SearchSpoonacular($('#query-input').val(), $('#cuisine-select').val(), $('.type-select').val(), 3);
+        event.preventDefault();
+        SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
         // calling the display youtube playlists function while outlining cuisineInput variable
         displayYoutubePlaylists($('.cuisine-select').val() + " music");
     })
 
     function SearchSpoonacular(query, cuisine, type, numberToGet) {
 
+        if (cuisine == "Choose your cuisine...") {
+            cuisine = "";
+        }
+
+        if (type == "Choose your type of meal...") {
+            type = "";
+        }
+        if (query == undefined) {
+            query = "";
+        }
+
+        console.log(cuisine);
+        console.log(type);
         var tempUrl = spoonacularBaseURL;
 
         if (query != "") {
@@ -48,7 +60,8 @@ $(document).ready(function () {
             Method: 'GET',
             url: tempUrl
         }).then(function (response) {
-        recipesCount = 0;
+            console.log(response);
+            recipesCount = 0;
             response.results.forEach(element => {
                 //This ajax call doesnt get us much info, but we can grab an ID and use it to get more info
                 GetSpoonacularGetById(element.id);
