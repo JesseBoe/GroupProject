@@ -10,6 +10,7 @@ $(document).ready(function () {
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
     var recipesCount = 0;
 
+    // this adds the cuisine drop down options in our html
     for (var i =0; i < geographicalCusineList.length; i++) {
         $('.cuisine-select').append('<option value='+geographicalCusineList[i]+'>'+geographicalCusineList[i]+'</option>');
     }
@@ -112,7 +113,7 @@ $(document).ready(function () {
     }
 
     function displayYoutubePlaylists(cuisineInput) {
-        console.log(cuisineInput);
+        $('.youtube-playlists').empty();
 
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
         var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
