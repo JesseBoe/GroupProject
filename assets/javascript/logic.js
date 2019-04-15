@@ -4,6 +4,7 @@ $(document).ready(function () {
     //The base sure for spoonacular.
     var spoonacularBaseURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search/?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250';
     var spoonacularSearchByIdURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/';
+    var listOfOnPageIds = [];
 
     //We can use this for input validation
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
@@ -23,6 +24,10 @@ $(document).ready(function () {
     // when the submit button is clicked, grab these values
     $("#submit-button").on("click", function () {
         event.preventDefault();
+        listOfOnPageIds.forEach(element => {
+            $('#card-' + element).remove();
+        });
+        listOfOnPageIds = [];
         SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
         // calling the display youtube playlists function while outlining cuisineInput variable
         displayYoutubePlaylists($('.cuisine-select').val() + " music");
@@ -41,8 +46,6 @@ $(document).ready(function () {
             query = "";
         }
 
-        console.log(cuisine);
-        console.log(type);
         var tempUrl = spoonacularBaseURL;
 
         if (query != "") {
@@ -60,7 +63,6 @@ $(document).ready(function () {
             Method: 'GET',
             url: tempUrl
         }).then(function (response) {
-            console.log(response);
             recipesCount = 0;
             response.results.forEach(element => {
                 //This ajax call doesnt get us much info, but we can grab an ID and use it to get more info
@@ -74,7 +76,6 @@ $(document).ready(function () {
             Method: 'GET',
             url: spoonacularSearchByIdURL + id + "/information?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250"
         }).then(function (response) {
-            console.log(response);
 
             if (response.image == "" || response.imageType == "") {
                 //The database fed us some bad data. Lets just skip over it.
@@ -86,9 +87,10 @@ $(document).ready(function () {
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
 
-                var thing = $('<div class="card"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)"></i> <i class="fas fa-heart ml-4 mr-4" id = "favorite-' + id +'" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
+                var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)"></i> <i class="fas fa-heart ml-4 mr-4" id = "favorite-' + id +'" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
 
                 thing.appendTo($('.' + col));
+                listOfOnPageIds.push(id);
                 recipesCount++;
 
                 //TODO: Make it so buttons look more clickable
