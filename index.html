@@ -10,9 +10,7 @@
   <!-- Stylesheets: Bootstrap(css), jQuery(slim), Popper, Bootstrap.js, fontAwesome, Google Fonts, style.css, jQuery. -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
@@ -23,7 +21,6 @@
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/core.js"></script>
 </head>
 
 <body>
@@ -38,171 +35,17 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-md-8">
-        <div class="row cards-row">
+      <div class="col-md-8 d-flex justify-content-center">
+        <div class="row cards-row" id="accordion">
 
           <!-- This is the column on the left (holding recipes). -->
           <div class="col-md-6">
-            <div id="accordion">
-
-              <div class="card">
-                <img class="card-img-top" src="assets/images/best-ever-beef-bourginon.jpg">
-                <div class="card-header text-center" id="headingOne">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                      aria-controls="collapseOne">
-                      <span id="recipe-name">Beef Bourguignon</span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings">6</span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time">4 Hours</span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data">RECIPE DATA HERE</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <!-- Recipe image goes here. -->
-                <div class="card-header text-center" id="headingTwo">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                      aria-controls="collapseTwo">
-                      <span id="recipe-name"></span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings"></span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time"></span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <!-- Recipe image goes here. -->
-                <div class="card-header text-center" id="headingThree">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
-                      aria-controls="collapseThree">
-                      <span id="recipe-name"></span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings"></span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time"></span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data"></span>
-                  </div>
-                </div>
-              </div>
+            <div class ="leftRecipes">
+          <!-- This is the second column (in the middle of the page) -->
             </div>
           </div>
-
-          <!-- This is the second column (in the middle of the page) -->
           <div class="col-md-6">
-            <div id="accordion">
-
-              <div class="card">
-                <!-- Recipe image goes here. -->
-                <div class="card-header text-center" id="headingFour">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
-                      aria-controls="collapseFour">
-                      <span id="recipe-name"></span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings"></span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time"></span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data"></span>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="card">
-                <!-- Recipe image goes here. -->
-                <div class="card-header text-center" id="headingFive">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true"
-                      aria-controls="collapseFive">
-                      <span id="recipe-name"></span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings"></span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time"></span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <!-- Recipe image goes here. -->
-                <div class="card-header text-center" id="headingTwo">
-                  <h1 class="recipe-title-area">
-                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true"
-                      aria-controls="collapseSix">
-                      <span id="recipe-name"></span><br>
-                      <div class="row">
-                        <div class="col-md-4 card-col" id="servings">
-                          Serves: <span id="recipe-servings"></span>
-                        </div>
-                        <div class="col-md-8 card-col" id="time">
-                          Cook Time: <span id="recipe-time"></span>
-                        </div>
-                      </div>
-                    </a>
-                  </h1>
-                </div>
-                <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-                    <span id="recipe-data"></span>
-                  </div>
-                </div>
-              </div>
-
+            <div class ="rightRecipes">
             </div>
           </div>
         </div>
