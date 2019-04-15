@@ -1,6 +1,6 @@
-# Snackify
+# Tastes & Tunes
 
-### Welcome to Snackify!
+### Welcome to Tastes & Tunes!
 
 Calling all entertainers! Tell us what type of food you're in the mood for an and add your dish name (this step is optional), and we'll generate a few recipies and a few playlists that might interest you.
 

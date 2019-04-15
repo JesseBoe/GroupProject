@@ -19,15 +19,35 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
   <!-- Jumbotron header. -->
   <div class="jumbotron jumbotron-fluid">
-    <div class="container header">
+    <div class="container">
       <h1 class="display-3">Tastes & Tunes</h1>
+
+      <div class="input-group mb-3">
+        <select class="custom-select cuisine-select" id="inputGroupSelect02">
+          <option selected>Choose your cuisine...</option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <select class="custom-select type-select" id="inputGroupSelect02">
+          <option selected>Choose your type of meal...</option>
+          <option value="1">Breakfast</option>
+          <option value="2">Lunch</option>
+          <option value="3">Appetizer/Small Plate</option>
+          <option value="4">Drink</option>
+          <option value="5">Main Course</option>
+        </select>
+      </div>
+      
+      <button type="button" class="btn btn-danger" id="submit-button">Submit</button>
+
     </div>
   </div>
 
@@ -54,9 +74,8 @@
       <!-- This is the column in which the music data will populate -->
       <div class="col-md-4">
         <div class="card" style="width: 100%;">
-          <div class="card-body">
-            <h5 class="card-title">YouTube Section</h5>
-            <p class="card-text">Your playlists go here.</p>
+          <div class="card-body youtube-playlists">
+            <h5 class="card-title">Your Tunes:</h5>
           </div>
         </div>
       </div>
@@ -65,6 +84,7 @@
   </div>
 
   <script src="assets/javascript/logic.js"></script>
+
 </body>
 
 </html>
