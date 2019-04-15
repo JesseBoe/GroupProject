@@ -113,7 +113,7 @@ $(document).ready(function () {
     }
 
     function displayYoutubePlaylists(cuisineInput) {
-        console.log(cuisineInput);
+        $('.youtube-playlists').empty();
 
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
         var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
