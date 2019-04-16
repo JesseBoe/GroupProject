@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     //We can use this for input validation
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
+    var foodTypeList = ['Main Course', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
     var recipesCount = 0;
 
     // this adds the cuisine drop down options in our html
@@ -25,24 +26,44 @@ $(document).ready(function () {
     // when the submit button is clicked, grab these values
     $("#submit-button").on("click", function () {
         event.preventDefault();
-        listOfOnPageIds.forEach(element => {
-            $('#card-' + element).remove();
-        });
-        listOfOnPageIds = [];
-        SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
-        // calling the display youtube playlists function while outlining cuisineInput variable
-        displayYoutubePlaylists($('.cuisine-select').val() + " music");
+
+        if (checkInput()) 
+        {
+            listOfOnPageIds.forEach(element => {
+                $('#card-' + element).remove();
+            });
+            listOfOnPageIds = [];
+            SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
+            // calling the display youtube playlists function while outlining cuisineInput variable
+            displayYoutubePlaylists($('.cuisine-select').val() + " music");
+        }
     })
+
+    function checkInput(query, cuisine, type, numberToGet) 
+    {
+        var valid = true;
+        console.log(geographicalCusineList.indexOf($('.cuisine-select').val()));
+        if (geographicalCusineList.indexOf($('.cuisine-select').val()) == -1) {
+            setInvalid($('.cuisine-select'));
+            valid = false;
+        }
+        setValid($('.cuisine-select'));
+        if (foodTypeList.indexOf($('.type-select').val()) == -1) {
+            setInvalid($('.type-select'));
+            valid = false;
+        }
+        setValid($('.type-select'));
+        if (numberToGet > 0) {
+            //This doesnt happen unless someone is really messing with our website.
+            alert("Please use a number higher than 0");
+            valid = false;
+        }
+
+        return valid;
+    }
 
     function SearchSpoonacular(query, cuisine, type, numberToGet) {
 
-        if (cuisine == "Choose your cuisine...") {
-            cuisine = "";
-        }
-
-        if (type == "Choose your type of meal...") {
-            type = "";
-        }
         if (query == undefined) {
             query = "";
         }
@@ -102,6 +123,7 @@ $(document).ready(function () {
                 })
                 $('#recipe-' + id).on("click", function() {
                     console.log("Recipe: " + id);
+                    //$('#recipe-' + id).attr('data', response.instructions);
                     //TODO: Add some Module thingy thing
                 })
                 $('#favorite-' + id).on("click", function(){
@@ -139,5 +161,14 @@ $(document).ready(function () {
                 playlist.prepend('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
+    }
+
+    function setValid($element) {
+        $element.removeClass('is-invalid');
+        $element.addClass('is-valid');
+    }
+    function setInvalid($element) {
+        $element.removeClass('is-valid');
+        $element.addClass('is-invalid');
     }
 })
