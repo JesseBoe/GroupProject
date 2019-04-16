@@ -82,7 +82,7 @@ $(document).ready(function () {
             }
             else {
 
-
+                console.log(response);
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
