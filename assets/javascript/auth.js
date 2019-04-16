@@ -9,11 +9,10 @@
           messagingSenderId: "334536077143"
       }
       firebase.initializeApp(config);
+      var currentUser = firebase.auth().currentUser;
+      var auth = firebase.auth();
 
-      const auth = firebase.auth();
-      const currentUser = firebase.auth().currentUser;
-      const providerGoogle = new firebase.auth.GoogleAuthProvider();
-      var providerAdmin;
+      var providerGoogle = new firebase.auth.GoogleAuthProvider();
       console.log("who is " + currentUser);
 
       //Initial setting of disabled attribute on Buttons - where false = visible/not disabled
@@ -31,6 +30,8 @@
           password = $("#pass-input").val();
           alert(email + password);
           createUser(email, password);
+          currentUser = firebase.auth().currentUser;
+          console.log(currentUser)
       });
 
       $("#loginBtn").on("click", function(event) {
@@ -63,6 +64,21 @@
               console.log("Logout if usr=F - LogoutBtn disabled");
               console.log(currentUser);
           }
+      });
+
+      firebase.auth().signInWithPopup(providerGoogle).then(function(result) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+      }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
       });
 
       // Create a new user - hook to a register button
@@ -112,5 +128,88 @@
 
       // Update a user - Work on this last.. MVP can exist without user update
       function updateUser(email, password) {}
+
+      /* js for google auth */
+      function googleSignin() {
+          firebase.auth()
+              .signInWithPopup(provider).then(function(result) {
+                  var token = result.credential.accessToken;
+                  var user = result.user;
+                  console.log(token)
+                  console.log(user)
+              }).catch(function(error) {
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  console.log(error.code)
+                  console.log(error.message)
+              });
+      }
+
+      function googleSignout() {
+          firebase.auth().signOut()
+
+          .then(function() {
+              console.log('Signout Succesfull')
+          }, function(error) {
+              console.log('Signout Failed')
+          });
+      }
+
+
+
+
+
+
+      /* js for auth modals below */
+
+
+      // generate test data array
+
+      // createTestData()
+      // deleteTestData()
+
+      function createTestData() {
+          let testDataArr = [];
+          let domain1 = '@gmail.com';
+          let domain = '@greyspider.com';
+          var uidbase = 'test';
+          var email = '';
+          let password = 'Td0mhp2r';
+          var extraProp = '';
+          var numInt = 10;
+          for (let i = 0; i < numInt; i++) {
+              objectId = i;
+              email = (uidbase + i + domain);
+              console.log(objectId + ' email: ' + email + ' password: ' + password);
+              testDataArr.push({
+                  "objectId": objectId,
+                  "email": email,
+                  "password": password,
+                  "extraProp": extraProp
+              });
+              console.log(testDataArr[i]);
+              firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+                  console.log(error.message);
+              });
+          }
+      }
+      // fix deleteTest data - admin not working
+      /*
+            function deleteTestData() {
+                let numInt = 100;
+                let domain = '@greyspider.com';
+                let uidbase = 'test';
+                for (let i = 0; i < numInt; i++) {
+                    let email = (uidbase + i + domain);
+                    admin.auth().deleteUser(email)
+                        .then(function() {
+                            console.log('Successfully deleted user')
+                        })
+                        .catch(function(error) {
+                            console.log('Error deleting user:', error);
+                        });
+                }
+            }
+      */
 
   });
