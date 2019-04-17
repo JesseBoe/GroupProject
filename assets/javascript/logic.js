@@ -1,22 +1,27 @@
 
 $(document).ready(function () {
 
-    //The base sure for spoonacular.
+    //The base urls for spoonacular.
     var spoonacularBaseURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search/?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250';
     var spoonacularSearchByIdURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/';
+    //Used for keeping track of recipe ids for removing
     var listOfOnPageIds = [];
 
     //We can use this for input validation
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', "Latin American"];
     var foodTypeList = ['Main Course', 'Lunch', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
+    //This variable is used for calculating if cards should be appened on the left or right
     var recipesCount = 0;
+    //Used as a parameter in our ajax calls
     var offset = 0;
-    var isBrowsing = false;
-    var scrollTimerId;
+
+    //While lazyloadflag is true, the user can trigger more things to load, by scrolling to the bottom of the page
+    var lazyLoadFlag = false;
+    //Stores the most recent valid search in an object (.query .cuisine .type .numberToGet)
+    var currentSearch;
 
     // this adds the cuisine drop down options in our html
     for (var i =0; i < geographicalCusineList.length; i++) {
-        console.log(geographicalCusineList[i]);
         $('.cuisine-select').append(`<option value="${geographicalCusineList[i]}">${geographicalCusineList[i]}</option>`);
     }
 
@@ -26,16 +31,17 @@ $(document).ready(function () {
 
         if (checkInput($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6)) 
         {
+            currentSearch = { 'query' : $('#query-input').val(), 'cuisine': $('.cuisine-select').val(), 'type' : $('.type-select').val(), 'numberToGet' : 6};
+            console.log(currentSearch);
             listOfOnPageIds.forEach(element => {
                 $('#card-' + element).remove();
             });
             listOfOnPageIds = [];
             recipesCount = 0;
             offset = 0;
-            SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
+            SearchSpoonacular(currentSearch.query, currentSearch.cuisine, currentSearch.type, 6);
             // calling the display youtube playlists function while outlining cuisineInput variable
-            displayYoutubePlaylists($('.cuisine-select').val() + " music");
-            isBrowsing = true;
+            displayYoutubePlaylists(currentSearch.cuisine + " music");
         }
     })
 
@@ -47,8 +53,6 @@ $(document).ready(function () {
     function checkInput(query, cuisine, type, numberToGet) 
     {
         var valid = true;
-        console.log(geographicalCusineList.indexOf($('.cuisine-select').val()));
-        console.log($('.cuisine-select').val());
 
         if (geographicalCusineList.indexOf($('.cuisine-select').val()) == -1) {
             setInvalid($('.cuisine-select'));
@@ -75,12 +79,11 @@ $(document).ready(function () {
 
     function SearchSpoonacular(query, cuisine, type, numberToGet) {
 
+        var tempUrl = spoonacularBaseURL;
+
         if (query == undefined) {
             query = "";
         }
-
-        var tempUrl = spoonacularBaseURL;
-
         if (query != "") {
             tempUrl += "&query=" + query;
         }
@@ -91,18 +94,18 @@ $(document).ready(function () {
             tempUrl += "&type=" + type;
         }
         tempUrl += "&number=" + numberToGet;
-        tempUrl += "&offset=" + (offset * 6);
+        tempUrl += "&offset=" + (offset * numberToGet);
         if (offset < 5) {
             $.ajax({
                 Method: 'GET',
                 url: tempUrl
             }).then(function (response) {
                 response.results.forEach(element => {
-                    //This ajax call doesnt get us much info, but we can grab an ID and use it to get more info
                     GetSpoonacularGetById(element.id);
                 });
+            }).done(function () {
+                lazyLoadFlag = true;
             })
-
         }
     }
 
@@ -119,7 +122,6 @@ $(document).ready(function () {
             }
             else {
                 
-                console.log(response);
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
@@ -200,20 +202,16 @@ $(document).ready(function () {
     }
 
     $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            if (isBrowsing) {
-                if (scrollTimerId == null) {
-                    scrollTimerId = setTimeout(timer, 1000);
-                    //Append
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
+        {
+            if (currentSearch != null) 
+            {
+                if (lazyLoadFlag) {
                     offset++;
-                    console.log(offset);
-                    SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
+                    SearchSpoonacular(currentSearch.query, currentSearch.cuisine, currentSearch.type, 6);
+                    lazyLoadFlag = false;
                 }
             }
         }
     });
-
-    function timer(){
-        scrollTimerId = null;
-    }
 })
