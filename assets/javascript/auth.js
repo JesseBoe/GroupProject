@@ -12,9 +12,6 @@
       var currentUser = firebase.auth().currentUser;
       var auth = firebase.auth();
 
-      var providerGoogle = new firebase.auth.GoogleAuthProvider();
-      console.log("who is " + currentUser);
-
       //Initial setting of disabled attribute on Buttons - where false = visible/not disabled
       $("#registerBtn").attr("disabled", false);
       $("#loginBtn").attr("disabled", false);
@@ -28,17 +25,14 @@
           event.preventDefault();
           email = $("#email-input").val();
           password = $("#pass-input").val();
-          alert(email + password);
           createUser(email, password);
           currentUser = firebase.auth().currentUser;
-          console.log(currentUser)
       });
 
       $("#loginBtn").on("click", function(event) {
           event.preventDefault();
           email = $("#email-input").val();
           password = $("#pass-input").val();
-          alert(email + password);
           loginUser(email, password);
       });
 
@@ -52,17 +46,18 @@
       //It is just changing button state (active vs disabled) depending on whether
       //user is logged in or not. will expand this once core functionality is working
       firebase.auth().onAuthStateChanged(function(user) {
+          console.log('onAuthStateChanged::USER', user);
           // user is undefined if no user signed in
           window.user = user; // user is undefined if no user signed in
           if (user) {
+              console.log(user);
+              currentUser = user;
               $("#logoutBtn").attr("disabled", false);
               console.log("Logout if usr=T - LogoutBtn not disabled");
-              console.log(currentUser);
           } else {
               $("#logoutBtn").attr("disabled", true);
               // this will occur on initial load or refresh as no one is logged in
               console.log("Logout if usr=F - LogoutBtn disabled");
-              console.log(currentUser);
           }
       });
 
@@ -83,42 +78,41 @@
 
       // Create a new user - hook to a register button
       function createUser(email, password) {
-          alert("CreateUser"); // for testing
-          // logic to catch empty submissions
+          alert("CreateUser");
           if (!email || !password) {
-              alert("Please enter an e-mail and a password") // change to modal
+              alert("Please enter an e-mail and a password")
           } else {
               //Note: if I remove the 2 promise lines below, I get "user already exists"
               //const promise = auth().createUserWithEmailAndPassword(email, password);
               // promise.catch(e => console.log(e.message));
               //without promise lines, I get "Violation click handler took 7000ms"
-              firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-                  console.log(error.message);
-                  // need to handle these errors better - looking at error codes
-                  alert("user already exists");
-              });
-              alert("User Created" + currentUser);
+              firebase.auth().createUserWithEmailAndPassword(email, password)
+                  .then(function(res) {
+                      alert("Registration successful")
+                  })
+                  .catch(function(error) {
+                      console.log(error.message);
+                      // need to handle these errors better - looking at error codes
+                      alert(error.message);
+                  });
           }
       }
 
       // User login - hook to login button
       function loginUser(email, password) {
+          console.log("local?", firebase.auth.Auth.Persistence.LOCAL);
           alert("loginUser");
-          // logic to catch empty submissions
           if (!email || !password) {
               alert("Please enter an e-mail and a password") // change to modal
           } else {
-              // const promise = auth().signInWithEmailAndPassword(email, password);
-              // promise.catch(e => console.log(e.message));
-              //without promise lines, I get "Violation click handler took 7000ms"
-              firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-                  console.log(error.message);
-                  // need to handle these errors better - looking at error codes
-                  alert("incorrect credentials - or user not in DB");
-              });
-              alert("User Logged in" + currentUser);
+              firebase.auth().signInWithEmailAndPassword(email, password).then(function(res) {
+                  console.log("Log in successful");
+              }).catch(function(err) {
+                  console.log("error logging in", err);
+              })
           }
       }
+
       // Sign out user
       function logoutUser() {
           firebase.auth().signOut().catch(function(err) {
@@ -149,23 +143,16 @@
           firebase.auth().signOut()
 
           .then(function() {
-              console.log('Signout Succesfull')
+              console.log('Signout Succesful')
           }, function(error) {
               console.log('Signout Failed')
           });
       }
 
 
+      //Generate test data array
 
-
-
-
-      /* js for auth modals below */
-
-
-      // generate test data array
-
-      // createTestData()
+      //createTestData()
       // deleteTestData()
 
       function createTestData() {
@@ -194,22 +181,22 @@
           }
       }
       // fix deleteTest data - admin not working
-      /*
-            function deleteTestData() {
-                let numInt = 100;
-                let domain = '@greyspider.com';
-                let uidbase = 'test';
-                for (let i = 0; i < numInt; i++) {
-                    let email = (uidbase + i + domain);
-                    admin.auth().deleteUser(email)
-                        .then(function() {
-                            console.log('Successfully deleted user')
-                        })
-                        .catch(function(error) {
-                            console.log('Error deleting user:', error);
-                        });
-                }
-            }
-      */
+
+
+      function deleteTestData() {
+          let numInt = 100;
+          let domain = '@greyspider.com';
+          let uidbase = 'test';
+          for (let i = 0; i < numInt; i++) {
+              let email = (uidbase + i + domain);
+              admin.auth().deleteUser(email)
+                  .then(function() {
+                      console.log('Successfully deleted user')
+                  })
+                  .catch(function(error) {
+                      console.log('Error deleting user:', error);
+                  });
+          }
+      }
 
   });
