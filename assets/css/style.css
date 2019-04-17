@@ -11,7 +11,7 @@
 
 #submit-button, #close-button {
     font-family: 'Pacifico', cursive;
-    padding:5px;
+    padding: 5px;
 }
 
 #submit-button:hover, #close-button:hover {
@@ -20,27 +20,21 @@
 }
 
 body {
-    background:
-    repeating-linear-gradient(
-        45deg,
-        transparent 0,
-        transparent 25%,
-        tomato 0,
-        rgba(216, 154, 143, 0.8) 50%
-    ), white;
+    background: repeating-linear-gradient( 45deg, transparent 0, transparent 25%, tomato 0, rgba(216, 154, 143, 0.8) 50%), white;
     background-blend-mode: multiply;
     /* Our gradient breaks if the height is too low? */
     min-height: 1000px;
 }
 
 .card {
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
 }
 
 #recipe-name {
-    font-size:18pt;
-    font-weight:bold;
+    font-size: 18pt;
+    font-weight: bold;
 }
+
 
 #playlist-name {
     font-size:15pt;
@@ -51,7 +45,8 @@ body {
     padding:0rem;
 }
 
-#servings, #time {
+#servings,
+#time {
     text-align: center;
 }
 
@@ -65,5 +60,3 @@ i:hover {
     transition: 0.4s ease-out;
     transform: scale(1.2);
 }
-
-
