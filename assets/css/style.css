@@ -2,16 +2,21 @@
     background: rgb(255,255,255);
     background: linear-gradient(63deg, rgba(255,255,255,1) 42%, rgba(255,255,255,0.3618040966386554) 100%);
     padding-bottom:2rem;
-    padding-top:2rem;
+    padding-top:2.3rem;
 }
 
 .display-3 {
     font-family: 'Pacifico', cursive;
 }
 
-#submit-button {
+#submit-button, #close-button {
     font-family: 'Pacifico', cursive;
     padding:5px;
+}
+
+#submit-button:hover, #close-button:hover {
+    transition: 0.4s ease-out;
+    transform: scale(1.1);
 }
 
 body {
@@ -28,7 +33,6 @@ body {
     min-height: 1000px;
 }
 
-
 .card {
     margin-bottom:1rem;
 }
@@ -36,6 +40,10 @@ body {
 #recipe-name {
     font-size:18pt;
     font-weight:bold;
+}
+
+#playlist-name {
+    font-size:15pt;
 }
 
 .btn, .card-col {
@@ -49,6 +57,13 @@ body {
 
 .recipe-title-area:hover {
     color:tomato;
+    transition: ease-out;
+}
+
+i:hover {
+    opacity: 0.6;
+    transition: 0.4s ease-out;
+    transform: scale(1.2);
 }
 
 
