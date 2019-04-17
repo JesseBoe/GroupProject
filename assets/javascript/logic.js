@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     //We can use this for input validation
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
-    var foodTypeList = ['Main Course', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
+    var foodTypeList = ['Main Course', 'Lunch', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
     var recipesCount = 0;
 
     // this adds the cuisine drop down options in our html
@@ -16,18 +16,11 @@ $(document).ready(function () {
         $('.cuisine-select').append('<option value='+geographicalCusineList[i]+'>'+geographicalCusineList[i]+'</option>');
     }
 
-    //Search spoonacular and retrieve information about dishes. 
-    //query: dish name.
-    //cuisine: location it comes from.
-    //type: One of the following: main course, side dish, dessert, appetizer, salad, bread, breakfast, soup, beverage, sauce, or drink.
-    //offset: Unused at this point in time. Maybe look into lazy loading cards as the user srolls down? This is probably pretty complicated for both code and front end
-
-
     // when the submit button is clicked, grab these values
     $("#submit-button").on("click", function () {
         event.preventDefault();
 
-        if (checkInput()) 
+        if (checkInput($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6)) 
         {
             listOfOnPageIds.forEach(element => {
                 $('#card-' + element).remove();
@@ -39,6 +32,11 @@ $(document).ready(function () {
         }
     })
 
+    //Search spoonacular and retrieve information about dishes. 
+    //query: dish name.
+    //cuisine: location it comes from.
+    //type: One of the following: main course, side dish, dessert, appetizer, salad, bread, breakfast, soup, beverage, sauce, or drink.
+    //offset: Unused at this point in time. Maybe look into lazy loading cards as the user srolls down? This is probably pretty complicated for both code and front end
     function checkInput(query, cuisine, type, numberToGet) 
     {
         var valid = true;
@@ -47,13 +45,17 @@ $(document).ready(function () {
             setInvalid($('.cuisine-select'));
             valid = false;
         }
-        setValid($('.cuisine-select'));
+        else {
+            setValid($('.cuisine-select'));
+        }
         if (foodTypeList.indexOf($('.type-select').val()) == -1) {
             setInvalid($('.type-select'));
             valid = false;
         }
-        setValid($('.type-select'));
-        if (numberToGet > 0) {
+        else {
+            setValid($('.type-select'));
+        }
+        if (numberToGet <= 0) {
             //This doesnt happen unless someone is really messing with our website.
             alert("Please use a number higher than 0");
             valid = false;
@@ -98,6 +100,8 @@ $(document).ready(function () {
             Method: 'GET',
             url: spoonacularSearchByIdURL + id + "/information?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250"
         }).then(function (response) {
+            console.log(response);
+            
 
             if (response.image == "" || response.imageType == "") {
                 //The database fed us some bad data. Lets just skip over it.
@@ -109,25 +113,29 @@ $(document).ready(function () {
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
 
-                var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Rating: <span id="recipe-servings">' + response.spoonacularScore +'</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)"></i> <i class="fas fa-heart ml-4 mr-4" id = "favorite-' + id +'" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
+                var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)" data-toggle="modal" data-target="#exampleModalCenter"></i> <i class="far fa-heart ml-4 mr-4" id = "favorite-' + id +'" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
+
 
                 thing.appendTo($('.' + col));
                 listOfOnPageIds.push(id);
                 recipesCount++;
 
-                //TODO: Make it so buttons look more clickable
-
                 $('#link-' + id).on("click", function () {
                     console.log("Link: " + id);
                     window.open(response.spoonacularSourceUrl, '_blank')
                 })
+
+                // This is the click that pops up your instructions modal.
                 $('#recipe-' + id).on("click", function() {
                     console.log("Recipe: " + id);
-                    //$('#recipe-' + id).attr('data', response.instructions);
-                    //TODO: Add some Module thingy thing
+                    $("#recipe-instructions").text(response.instructions);
                 })
+
                 $('#favorite-' + id).on("click", function(){
                     console.log("Favorite: " + id);
+                    toggleHeart($('#favorite-' + id));
+
+                    
                     //TODO: Add firebase something something
                 })
             }
@@ -150,15 +158,20 @@ $(document).ready(function () {
 
             // assigning the jquery to a variable
             var playlist = $('.youtube-playlists');
+            var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
+            
 
             // for every response (playlist) returned:
             for (var i = 0; i < response.items.length; i++) {
 
                 // get the playlist IDs from the youtube API
                 var playlistID = response.items[i].id.playlistId;
+                var playlistHeader = response.items[i].snippet.title;
 
                 // embed youtube playlist into HTML card
-                playlist.prepend('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+                playlist.append(playlistContainer);
+                playlistContainer.append(playlistHeader);
+                playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
     }
@@ -170,5 +183,14 @@ $(document).ready(function () {
     function setInvalid($element) {
         $element.removeClass('is-valid');
         $element.addClass('is-invalid');
+    }
+
+    function toggleHeart($element){
+        if ($element.hasClass('fas')) {
+            $element.removeClass('fas').addClass('far');
+        }
+        else if ($element.hasClass('far')) {
+            $element.removeClass('far').addClass('fas');
+        }
     }
 })

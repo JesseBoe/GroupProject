@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Tastes & Tunes</title>
 
-  <!-- Stylesheets: Bootstrap(css), jQuery(slim), Popper, Bootstrap.js, fontAwesome, Google Fonts, style.css, jQuery. -->
+  <!-- Stylesheets: Bootstrap(css), jQuery(slim), Popper, Bootstrap.js, fontAwesome, Google Fonts, style.css. -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -42,16 +42,16 @@
         <select class="custom-select type-select" id="inputGroupSelect02">
           <option selected>Choose your type of meal...</option>
           <option value="Breakfast">Breakfast</option>
-          <option value="Main Course">Lunch</option>
+          <option value="Lunch">Lunch</option>
           <option value="Appetizer">Appetizer/Small Plate</option>
-          <option value="Drink">Drink</option>
+          <option value="Desserts">Desserts</option>
           <option value="Main Course">Main Course</option>
         </select>
         <div class="invalid-feedback">
           Please choose a type.
         </div>
       </div>
-      
+
       <button type="button" class="btn btn-danger" id="submit-button">Submit</button>
 
     </div>
@@ -66,12 +66,12 @@
 
           <!-- This is the column on the left (holding recipes). -->
           <div class="col-md-6">
-            <div class ="leftRecipes">
-          <!-- This is the second column (in the middle of the page) -->
+            <div class="leftRecipes">
+              <!-- This is the second column (in the middle of the page) -->
             </div>
           </div>
           <div class="col-md-6">
-            <div class ="rightRecipes">
+            <div class="rightRecipes">
             </div>
           </div>
         </div>
@@ -86,7 +86,22 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
+  <!-- This is our modal w/ instructions. -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Instructions:</h5> <button type="button"
+            class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body"><span id="recipe-instructions"></span></div>
+        <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            id="close-button">Close</button> </div>
+      </div>
     </div>
   </div>
 
