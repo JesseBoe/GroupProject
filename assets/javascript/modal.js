@@ -1,6 +1,6 @@
 // Get the modal
-var modal = document.getElementById('modalWindow');
-var btn = document.getElementById('modalBtn');
+var modal = document.getElementById('authModalWindow');
+var btn = document.getElementById('authModalBtn');
 var span = document.getElementsByClassName("close")[0];
 
 //  Open the modal 

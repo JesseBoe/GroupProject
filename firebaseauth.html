@@ -23,54 +23,124 @@
     <!-- Latest Bootdtrap css and other stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
 
     <style>
-        * {
-            border: 1px solid green !important;
+        button:disabled,
+        button[disabled] {
+            cursor: not-allowed;
+            pointer-events: none;
+            background-color: blue;
+            color:yellow;
         }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            height: 100%;
+
+        }
+        .authModalFormat {
+            width: 400px;
+            height: auto;
+        }
+        .authModalHeader {
+            background-color: rgba(216, 154, 143, .8);
+        }
+        .close {
+            font-size: 40px;
+            font-weight: 900;
+        }
+
+        .authTitle {
+            font-weight: 600;
+            font-size: 32px;
+            color: black;
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+        .authBodyText {
+            font-weight: bold;
+            color: black;
+        }
+
+        .authModalLoginBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
+            font-weight: bold;
+        }
+        .authModalLogoutBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
+            font-weight: bold;
+        }
+        .authModalRegisterBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
+            font-weight: bold;
+        }
+        .authFooter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-spacer {
+            width: 100px;
+        }
+
+        #authModalWindow {
+           margin-left: 25%;
+           margin-right: 25%;
+
+        } 
+
     </style>
 </head>
-<!--
-Note: This is just a shell to assist with testing.
-I envision creating 2 modals - login and register
-each modal will have title (Register or Login) , text fields for 
-email and password, and a submit button.
-Since Gabbi is handling UI, wanted to make sure this was in line with 
-how she wants to handle this..
--->
 
 <body>
-    <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <h1>Authenticate</h1>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <form id="target-form">
-                        <label for="email-input" name="email">E-mail: </label>
-                        <input id="email-input" name="email" type="email">
-                        <br>
-                        <label for="pass-input" name="password">Password: </label>
-                        <input id="pass-input" name="password" type="password">
-                        <br><br>
-                        <button id="registerBtn" form="target-form" name="register" type="submit">Register</button>
-                        <button id="loginBtn" form="target-form" name="login" type="submit">Login</button>
-                        <button id="logoutBtn" name="logout" type="input">Logout</button>
-                        <br><br>
-                        <button onclick="googleSignin()">Google Signin</button>
-                        <button onclick="googleSignout()">Google Signout</button>
+    <div class="jumbotron">
+        <h2>Web Page Stub Here</h2>
+    </div>
+    <div id="container" class="container" data-backdrop="static" data-keyboard="false">
+        <!-- Modal -->
+        <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="authModalWindow" role="dialog">
+            <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+            <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header authModalHeader">
+                        <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span> Login or Register</h1>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body authBodyText">
+                        <form id="modalForm" role="form">
+                            <div class="form-group">
+                                <label for="email-input"><span class="glyphicon glyphicon-user"></span>E-mail / User Name:</label>
+                                <input type="email" class="form-control" id="email-input" placeholder="Enter email address">
+                            </div>
 
-                    </form>
+                            <div class="form-group">
+                                <label for="pass-input"><span class="glyphicon glyphicon-eye-open"></span>Password:</label>
+                                <input type="password" class="form-control" id="pass-input" placeholder="Enter password">
+                            </div>
+                
+                            <button id="loginBtn" type="submit" class="btn btn-default btn-success btn-block authModalLoginBtn"><span class="glyphicon glyphicon-off"></span> Login</button>
+                            <button id="registerBtn" type="submit" class="btn btn-default btn-primary btn-block authModalRegisterBtn" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Register</button>
+                        </form>
+                    </div>
+                    
+                    <div class="modal-footer authFooter">
+                        <button id="auth-LogoutBtn" type="input" class="pull-left btn btn-danger btn-default authModalLogoutBtn" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Logout</button>
+                    </div>
                 </div>
+
             </div>
         </div>
-
     </div>
-
+    
     <!--Craig's JavaScript-->
-    <script src="./assets/javascript/auth.js"></script>
+   <script src="./assets/javascript/auth.js"></script>
+
 </body>
 
 </html>
