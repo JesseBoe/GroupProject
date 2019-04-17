@@ -32,97 +32,99 @@
             background-color: #006699;
             color: #000066;
         }
-        
-        .modal {
-            /* display: none; */
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 100px;
-            /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 80%;
-            height: 100%;
-            overflow: auto;
-            /* Enable scroll */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
+        .authModalFormat {
+            width: 400px;
+            height: auto;
         }
-        
-        .modal-content {
-            background-color: white;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid black;
-            width: 80%;
+        .authModalHeader {
+            background-color: rgba(216, 154, 143, .8);
         }
-        
         .close {
-            color: blue;
-            float: right;
-            font-size: 24px;
+            font-size: 40px;
+            font-weight: 900;
+        }
+
+        .authTitle {
+            font-weight: 600;
+            font-size: 32px;
+            color: black;
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+        .authBodyText {
+            font-weight: bold;
+            color: black;
+        }
+
+        .authModalLoginBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
             font-weight: bold;
         }
-        
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+        .authModalCloseBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
+            font-weight: bold;
+        }
+        .authModalRegisterBtn {
+            background-color: rgb(216, 154, 143);
+            color: black;
+            font-weight: bold;
+        }
+        .authFooter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-spacer {
+            width: 100px;
         }
         
-        .modal-backdrop {
-            z-index: -1;
-        }
     </style>
 </head>
 
 <body>
+    <div class="jumbotron">
+        <h2>Web Page Stub Here</h2>
+    </div>
     <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col">
-                    <button id="modalBtn">Modal Login Window</button>
-                    <div id="modalWindow" class="modal">
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>LOGIN USER MODAL</p>
-                            <form id="target-form">
-                                <label for="email-input" name="email">E-mail: </label>
-                                <input id="email-input" name="email" type="email">
-                                <br>
-                                <label for="pass-input" name="password">Password: </label>
-                                <input id="pass-input" name="password" type="password">
-                                <br><br>
-                                <button id="registerBtn" form="target-form" name="register" type="submit">Register</button>
-                                <button id="loginBtn" form="target-form" name="login" type="submit">Login</button>
-                                <br><br>
-                                <button id="logoutBtn" name="logout" type="input">Logout</button>
-                            </form>
-                        </div>
+        <!-- Modal -->
+        <div class="modal fade align-middle authModalFormat" id="authModalWindow" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header authModalHeader">
+                        <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span> Login or Register</h1>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body authBodyText">
+                        <form id="modalForm" role="form">
+                            <div class="form-group">
+                                <label for="email-input"><span class="glyphicon glyphicon-user"></span>E-mail / User Name:</label>
+                                <input type="email" class="form-control" id="email-input" placeholder="Enter email address">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pass-input"><span class="glyphicon glyphicon-eye-open"></span>Password:</label>
+                                <input type="password" class="form-control" id="pass-input" placeholder="Enter password">
+                            </div>
+                
+                            <button id="loginBtn" type="submit" class="btn btn-default btn-danger btn-block authModalLoginBtn"><span class="glyphicon glyphicon-off"></span> Login</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer authFooter">
+                        <button id="auth-closeBtn" type="input" class="pull-left btn btn-default btn-default authModalCloseBtn" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+                        <p class="auth-spacer"></p>
+                        <button id="registerBtn" type="input" class="pull-right btn btn-default btn-default authModalRegisterBtn" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Register</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-
+    
     <!--Craig's JavaScript-->
-    <script src="./assets/javascript/auth.js"></script>
-    <script src="./assets/javascript/modal.js"></script>
-    <script type="text/javascript">
-        $(window).on('load', function() {
-            $('#modalWindow').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            // $('#modalWindow').modal('show');
-        });
-    </script>
+   <script src="./assets/javascript/auth.js"></script>
 </body>
 
 </html>
