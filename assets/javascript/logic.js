@@ -91,9 +91,8 @@ $(document).ready(function () {
             tempUrl += "&type=" + type;
         }
         tempUrl += "&number=" + numberToGet;
-        tempUrl += "&offset=" + offset;
-
-        if (offset < 6) {
+        tempUrl += "&offset=" + (offset * 6);
+        if (offset < 5) {
             $.ajax({
                 Method: 'GET',
                 url: tempUrl
@@ -103,6 +102,7 @@ $(document).ready(function () {
                     GetSpoonacularGetById(element.id);
                 });
             })
+
         }
     }
 
@@ -111,7 +111,6 @@ $(document).ready(function () {
             Method: 'GET',
             url: spoonacularSearchByIdURL + id + "/information?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250"
         }).then(function (response) {
-            offset++;
             if (response.image == "" || response.imageType == "") {
                 //The database fed us some bad data. Lets just skip over it.
             }
@@ -119,7 +118,7 @@ $(document).ready(function () {
                 //More garbage
             }
             else {
-
+                
                 console.log(response);
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
@@ -206,6 +205,8 @@ $(document).ready(function () {
                 if (scrollTimerId == null) {
                     scrollTimerId = setTimeout(timer, 1000);
                     //Append
+                    offset++;
+                    console.log(offset);
                     SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
                 }
             }
