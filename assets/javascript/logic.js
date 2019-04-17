@@ -7,13 +7,17 @@ $(document).ready(function () {
     var listOfOnPageIds = [];
 
     //We can use this for input validation
-    var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
+    var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', "Latin American"];
     var foodTypeList = ['Main Course', 'Lunch', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
     var recipesCount = 0;
+    var offset = 0;
+    var isBrowsing = false;
+    var scrollTimerId;
 
     // this adds the cuisine drop down options in our html
     for (var i =0; i < geographicalCusineList.length; i++) {
-        $('.cuisine-select').append('<option value='+geographicalCusineList[i]+'>'+geographicalCusineList[i]+'</option>');
+        console.log(geographicalCusineList[i]);
+        $('.cuisine-select').append(`<option value="${geographicalCusineList[i]}">${geographicalCusineList[i]}</option>`);
     }
 
     // when the submit button is clicked, grab these values
@@ -26,9 +30,12 @@ $(document).ready(function () {
                 $('#card-' + element).remove();
             });
             listOfOnPageIds = [];
+            recipesCount = 0;
+            offset = 0;
             SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
             // calling the display youtube playlists function while outlining cuisineInput variable
             displayYoutubePlaylists($('.cuisine-select').val() + " music");
+            isBrowsing = true;
         }
     })
 
@@ -41,6 +48,8 @@ $(document).ready(function () {
     {
         var valid = true;
         console.log(geographicalCusineList.indexOf($('.cuisine-select').val()));
+        console.log($('.cuisine-select').val());
+
         if (geographicalCusineList.indexOf($('.cuisine-select').val()) == -1) {
             setInvalid($('.cuisine-select'));
             valid = false;
@@ -82,17 +91,19 @@ $(document).ready(function () {
             tempUrl += "&type=" + type;
         }
         tempUrl += "&number=" + numberToGet;
+        tempUrl += "&offset=" + (offset * 6);
+        if (offset < 5) {
+            $.ajax({
+                Method: 'GET',
+                url: tempUrl
+            }).then(function (response) {
+                response.results.forEach(element => {
+                    //This ajax call doesnt get us much info, but we can grab an ID and use it to get more info
+                    GetSpoonacularGetById(element.id);
+                });
+            })
 
-        $.ajax({
-            Method: 'GET',
-            url: tempUrl
-        }).then(function (response) {
-            recipesCount = 0;
-            response.results.forEach(element => {
-                //This ajax call doesnt get us much info, but we can grab an ID and use it to get more info
-                GetSpoonacularGetById(element.id);
-            });
-        })
+        }
     }
 
     function GetSpoonacularGetById(id) {
@@ -100,14 +111,15 @@ $(document).ready(function () {
             Method: 'GET',
             url: spoonacularSearchByIdURL + id + "/information?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250"
         }).then(function (response) {
-            console.log(response);
-            
-
+          
             if (response.image == "" || response.imageType == "") {
                 //The database fed us some bad data. Lets just skip over it.
             }
+            else if (response.instructions == "") {
+                //More garbage
+            }
             else {
-
+                
                 console.log(response);
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
@@ -192,5 +204,23 @@ $(document).ready(function () {
         else if ($element.hasClass('far')) {
             $element.removeClass('far').addClass('fas');
         }
+    }
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            if (isBrowsing) {
+                if (scrollTimerId == null) {
+                    scrollTimerId = setTimeout(timer, 1000);
+                    //Append
+                    offset++;
+                    console.log(offset);
+                    SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
+                }
+            }
+        }
+    });
+
+    function timer(){
+        scrollTimerId = null;
     }
 })
