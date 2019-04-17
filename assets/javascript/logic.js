@@ -150,15 +150,20 @@ $(document).ready(function () {
 
             // assigning the jquery to a variable
             var playlist = $('.youtube-playlists');
+            var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
+            
 
             // for every response (playlist) returned:
             for (var i = 0; i < response.items.length; i++) {
 
                 // get the playlist IDs from the youtube API
                 var playlistID = response.items[i].id.playlistId;
+                var playlistHeader = response.items[i].snippet.title;
 
                 // embed youtube playlist into HTML card
-                playlist.prepend('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+                playlist.append(playlistContainer);
+                playlistContainer.append(playlistHeader);
+                playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
     }
