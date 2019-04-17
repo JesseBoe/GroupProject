@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     //We can use this for input validation
     var geographicalCusineList = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle Eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
+    var foodTypeList = ['Main Course', 'Lunch', 'Side Dish', 'Dessert', 'Appetizer', 'Salad', 'Bread', 'Breakfast', 'Soup', 'Beverage', 'Sauce', 'Drink'];
     var recipesCount = 0;
 
     // this adds the cuisine drop down options in our html
@@ -15,34 +16,56 @@ $(document).ready(function () {
         $('.cuisine-select').append('<option value='+geographicalCusineList[i]+'>'+geographicalCusineList[i]+'</option>');
     }
 
+    // when the submit button is clicked, grab these values
+    $("#submit-button").on("click", function () {
+        event.preventDefault();
+
+        if (checkInput($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6)) 
+        {
+            listOfOnPageIds.forEach(element => {
+                $('#card-' + element).remove();
+            });
+            listOfOnPageIds = [];
+            SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
+            // calling the display youtube playlists function while outlining cuisineInput variable
+            displayYoutubePlaylists($('.cuisine-select').val() + " music");
+        }
+    })
+
     //Search spoonacular and retrieve information about dishes. 
     //query: dish name.
     //cuisine: location it comes from.
     //type: One of the following: main course, side dish, dessert, appetizer, salad, bread, breakfast, soup, beverage, sauce, or drink.
     //offset: Unused at this point in time. Maybe look into lazy loading cards as the user srolls down? This is probably pretty complicated for both code and front end
+    function checkInput(query, cuisine, type, numberToGet) 
+    {
+        var valid = true;
+        console.log(geographicalCusineList.indexOf($('.cuisine-select').val()));
+        if (geographicalCusineList.indexOf($('.cuisine-select').val()) == -1) {
+            setInvalid($('.cuisine-select'));
+            valid = false;
+        }
+        else {
+            setValid($('.cuisine-select'));
+        }
+        if (foodTypeList.indexOf($('.type-select').val()) == -1) {
+            setInvalid($('.type-select'));
+            valid = false;
+        }
+        else {
+            setValid($('.type-select'));
+        }
+        if (numberToGet <= 0) {
+            //This doesnt happen unless someone is really messing with our website.
+            alert("Please use a number higher than 0");
+            valid = false;
+        }
 
-
-    // when the submit button is clicked, grab these values
-    $("#submit-button").on("click", function () {
-        event.preventDefault();
-        listOfOnPageIds.forEach(element => {
-            $('#card-' + element).remove();
-        });
-        listOfOnPageIds = [];
-        SearchSpoonacular($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6);
-        // calling the display youtube playlists function while outlining cuisineInput variable
-        displayYoutubePlaylists($('.cuisine-select').val() + " music");
-    })
+        return valid;
+    }
 
     function SearchSpoonacular(query, cuisine, type, numberToGet) {
 
-        if (cuisine == "Choose your cuisine...") {
-            cuisine = "";
-        }
-
-        if (type == "Choose your type of meal...") {
-            type = "";
-        }
         if (query == undefined) {
             query = "";
         }
@@ -85,7 +108,7 @@ $(document).ready(function () {
             }
             else {
 
-
+                console.log(response);
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
@@ -110,6 +133,9 @@ $(document).ready(function () {
 
                 $('#favorite-' + id).on("click", function(){
                     console.log("Favorite: " + id);
+                    toggleHeart($('#favorite-' + id));
+
+                    
                     //TODO: Add firebase something something
                 })
             }
@@ -143,5 +169,23 @@ $(document).ready(function () {
                 playlist.prepend('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
+    }
+
+    function setValid($element) {
+        $element.removeClass('is-invalid');
+        $element.addClass('is-valid');
+    }
+    function setInvalid($element) {
+        $element.removeClass('is-valid');
+        $element.addClass('is-invalid');
+    }
+
+    function toggleHeart($element){
+        if ($element.hasClass('fas')) {
+            $element.removeClass('fas').addClass('far');
+        }
+        else if ($element.hasClass('far')) {
+            $element.removeClass('far').addClass('fas');
+        }
     }
 })
