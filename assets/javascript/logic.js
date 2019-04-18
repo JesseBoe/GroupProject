@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     //The base urls for spoonacular.
@@ -21,6 +20,38 @@ $(document).ready(function () {
 
     //Stores the most recent valid search in an object (.query .cuisine .type .numberToGet)
     var currentSearch;
+
+    var curUser;
+    var localFavoriteIds;
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            curUser = firebase.auth().currentUser;
+            //Logged In. Start listening to serverside changes.
+            
+
+            db.ref('users/' + curUser.uid).update({
+                email: curUser.email
+            });
+
+            db.ref('users/' + curUser.uid).child("favorites").once("value", snapshot => {
+                if (snapshot.exists()) {
+                    localFavoriteIds = snapshot.val();
+                }
+                else {
+                    db.ref('users/' + curUser.uid).update({
+                        favorites: "WHY CANT WE STORE ARRAYS HERE. TODO: Make child objects on favorites and do it that way"
+                    });
+                }
+            }).then(function() {
+                // db.ref('users/' + curUser.uid).on("value", function (snapshot) {
+                //     localFavoriteIds = snapshot.favorites.val();
+                // })
+            });
+        } else {
+            //Logged out. Do nothing
+        }
+    })
 
     // this adds the cuisine drop down options in our html
     for (var i = 0; i < geographicalCusineList.length; i++) {
@@ -130,6 +161,9 @@ $(document).ready(function () {
 
                 var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)" data-toggle="modal" data-target="#exampleModalCenter"></i> <i class="far fa-heart ml-4 mr-4" id = "favorite-' + id + '" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
 
+                // if (localFavoriteIds.includes(id)) {
+                //     toggleHeart($('#favorite-' + id));
+                // }
 
                 thing.appendTo($('.' + col));
                 listOfOnPageIds.push(id);
@@ -150,8 +184,20 @@ $(document).ready(function () {
                     console.log("Favorite: " + id);
                     toggleHeart($('#favorite-' + id));
 
+                    // db.ref('users/' + curUser.uid).child("favorites").once("value", snapshot => {
+                    //     var temp = snapshot.val();
+                    //     if (temp.includes(id)) {
+                    //         //Unfavorite
+                    //         temp.splice(tempArray.indexOf(id), 1);
+                    //         db.ref("users/" + curUser.uid).set({ 'favorites': temp });
+                    //     }
+                    //     else {
+                    //         //favorite
+                    //         temp.push(id);
+                    //         db.ref("users/" + curUser.uid).set({ 'favorites': temp });
+                    //     }
+                    // })
 
-                    //TODO: Add firebase something something
                 })
             }
         })
