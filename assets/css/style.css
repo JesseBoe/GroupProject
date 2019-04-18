@@ -74,20 +74,23 @@ button[disabled] {
     color: yellow;
 }
 
-#container {
+#container,
+#container1,
+#container2,
+#container3 {
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
     height: 100%;
 }
-
 .authModalFormat {
     width: 400px;
     height: auto;
 }
 
-.authModalHeader {
+.authModalHeader,
+.authFooter {
     background-color: rgba(216, 154, 143, .8);
 }
 
@@ -103,27 +106,40 @@ button[disabled] {
     margin-top: 10px;
     margin-left: 25px;
 }
-
+.authResponseText {
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+}
 .authBodyText {
     font-weight: bold;
     color: black;
 }
 
 .authModalLoginBtn,
-.authModalLogoutBtn,
+.authModalCloseBtn,
 .authModalRegisterBtn {
     background-color: rgb(216, 154, 143);
     color: black;
     font-weight: bold;
 }
+.authcenter{
+    align-content: center;
+    text-align: center;
+    height: 300px;
 
+}
 .authFooter {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#authModalWindow {
+#authModalWindow,
+#auth-nopwduid,
+#auth-badpwduid,
+#auth-duplicateuser,
+#auth-nosuchuser {
     margin-left: 25%;
     margin-right: 25%;
 }
