@@ -16,6 +16,7 @@ $(document).ready(function () {
     var offset = 0;
     //While lazyloadflag is true, the user can trigger more things to load, by scrolling to the bottom of the page
     var lazyLoadFlag = false;
+    var pageTokenID;
 
     //Stores the most recent valid search in an object (.query .cuisine .type .numberToGet)
     var currentSearch;
@@ -35,6 +36,7 @@ $(document).ready(function () {
             listOfOnPageIds.forEach(element => {
                 $('#card-' + element).remove();
             });
+            $('.youtube-playlists').empty();
             listOfOnPageIds = [];
             recipesCount = 0;
             offset = 0;
@@ -155,11 +157,13 @@ $(document).ready(function () {
     }
 
     function displayYoutubePlaylists(cuisineInput) {
-        $('.youtube-playlists').empty();
 
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
         var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
 
+        if (pageTokenID != null) {
+            youtubeQueryURL += "&pageToken=" + pageTokenID;
+        }
         // Creating an ajax call for when the submit button is clicked
         $.ajax({
             url: youtubeQueryURL,
@@ -169,7 +173,6 @@ $(document).ready(function () {
             console.log(response);
 
             pageTokenID = response.nextPageToken;
-            console.log(pageTokenID);
 
             // assigning the jquery to a variable
             var playlist = $('.youtube-playlists');
@@ -188,41 +191,6 @@ $(document).ready(function () {
                 playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
-    }
-
-    // this function will run if the youtubeLazyFlag is true
-    function trueFlag(cuisineInput) {
-
-        var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
-
-        var youtubeSecondURL = "https://www.googleapis.com/youtube/v3/search?pageToken=" + pageTokenID + "&part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
-        $.ajax({
-            url: youtubeSecondURL,
-            headers: { "Accept": "application/jason" },
-            method: "GET"
-        }).then(function (response) {
-            console.log(response);
-
-            pageTokenID = response.nextPageToken;
-            console.log(pageTokenID);
-
-            // assigning the jquery to a variable
-            var playlist = $('.youtube-playlists');
-            var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
-
-            // for every response (playlist) returned:
-            for (var i = 0; i < response.items.length; i++) {
-
-                // get the playlist IDs from the youtube API
-                var playlistID = response.items[i].id.playlistId;
-                var playlistHeader = response.items[i].snippet.title;
-
-                // embed youtube playlist into HTML card
-                playlist.append(playlistContainer);
-                playlistContainer.append(playlistHeader);
-                playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
-            };
-        })
     }
 
     function setValid($element) {
@@ -249,12 +217,8 @@ $(document).ready(function () {
                 if (lazyLoadFlag) {
                     offset++;
                     SearchSpoonacular(currentSearch.query, currentSearch.cuisine, currentSearch.type, 6);
+                    displayYoutubePlaylists(currentSearch.cuisine + " music");
                     lazyLoadFlag = false;
-                }
-            }
-            if (currentSearch.cuisine != null) {
-                if ($('.youtube-playlists').height() < $('.leftRecipes').height()) {
-                    trueFlag(currentSearch.cuisine + " music");
                 }
             }
         }
