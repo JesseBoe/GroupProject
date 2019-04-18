@@ -14,9 +14,12 @@ $(document).ready(function () {
     var recipesCount = 0;
     //Used as a parameter in our ajax calls
     var offset = 0;
-
     //While lazyloadflag is true, the user can trigger more things to load, by scrolling to the bottom of the page
     var lazyLoadFlag = false;
+
+    // copy of the above variable for lazyloading youtube videos
+    var youtubeLazyFlag = false;
+
     //Stores the most recent valid search in an object (.query .cuisine .type .numberToGet)
     var currentSearch;
 
@@ -158,6 +161,7 @@ $(document).ready(function () {
 
     function displayYoutubePlaylists(cuisineInput) {
         $('.youtube-playlists').empty();
+        youtubeLazyFlag = true;
 
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
         var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
@@ -174,7 +178,6 @@ $(document).ready(function () {
             var playlist = $('.youtube-playlists');
             var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
             
-
             // for every response (playlist) returned:
             for (var i = 0; i < response.items.length; i++) {
 
@@ -188,6 +191,37 @@ $(document).ready(function () {
                 playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
             };
         });
+    }
+
+    // this function will run if the youtubeLazyFlag is true
+    function trueFlag(cuisineInput) {
+        youtubeLazyFlag = false;
+        var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
+        var youtubeSecondURL = "https://www.googleapis.com/youtube/v3/search?pageToken=CAUQAA&part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
+        $.ajax({
+            url: youtubeSecondURL,
+            headers: { "Accept": "application/jason" },
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+
+            // assigning the jquery to a variable
+            var playlist = $('.youtube-playlists');
+            var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
+
+            // for every response (playlist) returned:
+            for (var i = 0; i < response.items.length; i++) {
+
+                // get the playlist IDs from the youtube API
+                var playlistID = response.items[i].id.playlistId;
+                var playlistHeader = response.items[i].snippet.title;
+
+                // embed youtube playlist into HTML card
+                playlist.append(playlistContainer);
+                playlistContainer.append(playlistHeader);
+                playlistContainer.append('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+            };
+        })
     }
 
     function setValid($element) {
@@ -218,6 +252,9 @@ $(document).ready(function () {
                     SearchSpoonacular(currentSearch.query, currentSearch.cuisine, currentSearch.type, 6);
                     lazyLoadFlag = false;
                 }
+            }
+            if (youtubeLazyFlag) {
+                trueFlag(currentSearch.cuisine + " music");
             }
         }
     });
