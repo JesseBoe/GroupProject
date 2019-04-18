@@ -14,6 +14,7 @@ $(document).ready(function () {
     var recipesCount = 0;
     //Used as a parameter in our ajax calls
     var offset = 0;
+    
     //While lazyloadflag is true, the user can trigger more things to load, by scrolling to the bottom of the page
     var lazyLoadFlag = false;
     var pageTokenID;

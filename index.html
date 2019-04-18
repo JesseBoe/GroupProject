@@ -96,13 +96,13 @@
   </div>
 
   <!-- This is our modal w/ instructions. -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Instructions:</h5> <button type="button"
-            class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <h5 class="modal-title" id="exampleModalCenterTitle">Instructions:</h5> <button type="button" class="close"
+            data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body"><span id="recipe-instructions"></span></div>
         <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -110,111 +110,125 @@
       </div>
     </div>
   </div>
+
   <!-- Auth Modal Login/Register dialog. -->
   <div id="container" class="container" data-backdrop="static" data-keyboard="false">
-    <!-- Modal -->
-    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="authModalWindow" role="dialog">
-        <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
-        <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header authModalHeader">
-                    <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span> Login or Register</h1>
-                    
-                </div>
-                <div class="modal-body authBodyText">
-                    <form id="modalForm" role="form">
-                        <div class="form-group">
-                            <label for="email-input"><span class="glyphicon glyphicon-user"></span>E-mail / User Name:</label>
-                            <input type="email" class="form-control" id="email-input" placeholder="Enter email address">
-                        </div>
 
-                        <div class="form-group">
-                            <label for="pass-input"><span class="glyphicon glyphicon-eye-open"></span>Password:</label>
-                            <input type="password" class="form-control" id="pass-input" placeholder="Enter password">
-                        </div>
-            
-                        <button id="loginBtn" type="submit" class="btn btn-default btn-success btn-block authModalLoginBtn"><span class="glyphicon glyphicon-off"></span> Login</button>
-                        <button id="registerBtn" type="submit" class="btn btn-default btn-primary btn-block authModalRegisterBtn" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Register</button>
-                    </form>
-                </div>
-                <div class="modal-footer authFooter">
-              </div>
-            </div>
+    <!-- Modal -->
+    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="authModalWindow"
+      role="dialog">
+      <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
 
-        </div>
-    </div>
-</div>
-<div id="container1" class="container" data-backdrop="static" data-keyboard="false">
-    <!-- Modal -->
-    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-nopwduid" role="dialog">
-        <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header authModalHeader">
-                    <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span> Invalid Credentials</h1>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="authcenter modal-body authResponseText">
-                  <br>
-                    <p>Please enter a valid <br>e-mail or password</p>
-                    <p>Try again!</p>
-                    <br>
-  
-                </div>
-                <div class="modal-footer authFooter">
+        <div class="modal-content">
+          <div class="modal-header authModalHeader justify-content-center">
+            <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span>Login or Register</h1>
+
+          </div>
+          <div class="modal-body authBodyText">
+            <form id="modalForm" role="form">
+              <div class="form-group">
+                <label for="email-input"><span class="glyphicon glyphicon-user"></span>Email/Username:</label>
+                <input type="email" class="form-control" id="email-input" placeholder="Enter email address">
               </div>
-            </div>
+
+              <div class="form-group">
+                <label for="pass-input"><span class="glyphicon glyphicon-eye-open"></span>Password:</label>
+                <input type="password" class="form-control" id="pass-input" placeholder="Enter password">
+              </div>
+
+              <button id="loginBtn" type="submit" class="btn btn-default btn-success btn-block authModalLoginBtn"><span
+                  class="glyphicon glyphicon-off"></span>Login</button>
+              <button id="registerBtn" type="submit"
+                class="btn btn-default btn-primary btn-block authModalRegisterBtn"><span
+                  class="glyphicon glyphicon-remove"></span>Register</button>
+            </form>
+          </div>
+          <div class="modal-footer authFooter">
+          </div>
         </div>
+
+      </div>
     </div>
-</div>
-<div id="container2" class="container" data-backdrop="static" data-keyboard="false">
+  </div>
+
+  <div id="container1" class="container" data-backdrop="static" data-keyboard="false">
+
     <!-- Modal -->
-    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-badpwduid" role="dialog">
-        <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-nopwduid"
+      role="dialog">
+      <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+
         <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header authModalHeader">
-                    <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span>Incorrect Credentials</h1>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="authcenter modal-body authResponseText">
-                  <br>
-                    <p>Incorrect e-mail or password</p>
-                    <p>Try again!</p>
-                    <br>
-  
-                </div>
-                <div class="modal-footer authFooter">
-              </div>
-            </div>
+        <div class="modal-content">
+          <div class="modal-header authModalHeader">
+            <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span> Invalid Credentials</h1>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="authcenter modal-body authResponseText">
+            <br>
+            <p>Please enter a valid email address or password.</p>
+            <p>Try again!</p><br>
+          </div>
+          <div class="modal-footer authFooter">
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<div id="container3" class="container" data-backdrop="static" data-keyboard="false">
+  </div>
+
+  <div id="container2" class="container" data-backdrop="static" data-keyboard="false">
+
     <!-- Modal -->
-    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-nosuchuser" role="dialog">
-        <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-badpwduid"
+      role="dialog">
+      <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+
         <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header authModalHeader">
-                    <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span>Incorrect e-mail</h1>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="authcenter modal-body authResponseText">
-                  <br>
-                    <p>We don't recognize that email.</p>
-                    <p>Please try again or</p>
-                    <p>create an account</p>
-                    <br>
-  
-                </div>
-                <div class="modal-footer authFooter">
-              </div>
-            </div>
+        <div class="modal-content">
+          <div class="modal-header authModalHeader">
+            <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span>Incorrect Credentials</h1>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="authcenter modal-body authResponseText">
+            <br>
+            <p>Incorrect e-mail or password.</p>
+            <p>Please try again!</p><br>
+          </div>
+          <div class="modal-footer authFooter">
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+
+  <div id="container3" class="container" data-backdrop="static" data-keyboard="false">
+
+    <!-- Modal -->
+    <div class="modal fade authModalFormat" data-backdrop="static" data-keyboard="false" id="auth-nosuchuser"
+      role="dialog">
+      <div data-backdrop="static" data-keyboard="false" class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header authModalHeader">
+            <h1 class="authTitle"><span class="glyphicon glyphicon-lock"></span>Incorrect e-mail</h1>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="authcenter modal-body authResponseText">
+            <br>
+            <p>We don't recognize that email.</p>
+            <p>Please try again or create an account.</p><br>
+          </div>
+          <div class="modal-footer authFooter">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="assets/javascript/logic.js"></script>
+  
   <!--Craig's JavaScript-->
   <script src="./assets/javascript/auth.js"></script>
 

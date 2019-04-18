@@ -5,6 +5,10 @@
     padding-top: 2.3rem;
 }
 
+html {
+    overflow: hidden;
+}
+
 .display-3 {
     font-family: 'Pacifico', cursive;
 }
@@ -13,6 +17,8 @@
 #close-button {
     font-family: 'Pacifico', cursive;
     padding: 5px;
+    background-color:tomato;
+    border: solid rgb(245, 94, 67);
 }
 
 #submit-button:hover,
@@ -85,8 +91,9 @@ button[disabled] {
     height: 100%;
 }
 .authModalFormat {
-    width: 400px;
+    width: 100%;
     height: auto;
+    margin:0rem;
 }
 
 .authModalHeader,
@@ -96,16 +103,16 @@ button[disabled] {
 
 .close {
     font-size: 40px;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .authTitle {
-    font-weight: 600;
-    font-size: 32px;
+    font-size: 34px;
     color: black;
-    margin-top: 10px;
-    margin-left: 25px;
+    font-family: 'Pacifico', cursive;
+    margin: 0rem;
 }
+
 .authResponseText {
     font-weight: bold;
     font-size: 24px;
@@ -122,7 +129,10 @@ button[disabled] {
     background-color: rgb(216, 154, 143);
     color: black;
     font-weight: bold;
+    padding: 5px;
+    border: solid rgb(211, 181, 176);
 }
+
 .authcenter{
     align-content: center;
     text-align: center;
@@ -140,6 +150,9 @@ button[disabled] {
 #auth-badpwduid,
 #auth-duplicateuser,
 #auth-nosuchuser {
-    margin-left: 25%;
-    margin-right: 25%;
+    overflow-y:scroll;
+}
+
+.modal {
+    overflow:auto;
 }
