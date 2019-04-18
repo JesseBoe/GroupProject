@@ -1,20 +1,22 @@
 .jumbotron {
-    background: rgb(255,255,255);
-    background: linear-gradient(63deg, rgba(255,255,255,1) 42%, rgba(255,255,255,0.3618040966386554) 100%);
-    padding-bottom:2rem;
-    padding-top:2.3rem;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(63deg, rgba(255, 255, 255, 1) 42%, rgba(255, 255, 255, 0.3618040966386554) 100%);
+    padding-bottom: 2rem;
+    padding-top: 2.3rem;
 }
 
 .display-3 {
     font-family: 'Pacifico', cursive;
 }
 
-#submit-button, #close-button {
+#submit-button,
+#close-button {
     font-family: 'Pacifico', cursive;
     padding: 5px;
 }
 
-#submit-button:hover, #close-button:hover {
+#submit-button:hover,
+#close-button:hover {
     transition: 0.4s ease-out;
     transform: scale(1.1);
 }
@@ -35,14 +37,14 @@ body {
     font-weight: bold;
 }
 
-
 #playlist-name {
-    font-size:15pt;
+    font-size: 15pt;
 }
 
-.btn, .card-col {
-    margin:0rem;
-    padding:0rem;
+.btn,
+.card-col {
+    margin: 0rem;
+    padding: 0rem;
 }
 
 #servings,
@@ -51,7 +53,7 @@ body {
 }
 
 .recipe-title-area:hover {
-    color:tomato;
+    color: tomato;
     transition: ease-out;
 }
 
@@ -59,4 +61,69 @@ i:hover {
     opacity: 0.6;
     transition: 0.4s ease-out;
     transform: scale(1.2);
+}
+
+
+/* Auth modal css selectors are below*/
+
+button:disabled,
+button[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: blue;
+    color: yellow;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+}
+
+.authModalFormat {
+    width: 400px;
+    height: auto;
+}
+
+.authModalHeader {
+    background-color: rgba(216, 154, 143, .8);
+}
+
+.close {
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.authTitle {
+    font-weight: 600;
+    font-size: 32px;
+    color: black;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.authBodyText {
+    font-weight: bold;
+    color: black;
+}
+
+.authModalLoginBtn,
+.authModalLogoutBtn,
+.authModalRegisterBtn {
+    background-color: rgb(216, 154, 143);
+    color: black;
+    font-weight: bold;
+}
+
+.authFooter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#authModalWindow {
+    margin-left: 25%;
+    margin-right: 25%;
 }
