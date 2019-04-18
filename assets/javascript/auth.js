@@ -50,7 +50,7 @@
       function loginUser(email, password) {
           console.log("local?", firebase.auth.Auth.Persistence.LOCAL);
           if (!email || !password) {
-              $('#auth-nopwduid').modal();
+                $('#auth-nopwduid').modal();
           } 
           else {
               firebase.auth().signInWithEmailAndPassword(email, password)
@@ -59,7 +59,6 @@
               })
               .catch(function(error) {
                   console.log(error.message);
-                  alert(error.message);
                   $('#auth-badpwduid').modal();
               });
           }
