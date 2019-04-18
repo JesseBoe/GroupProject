@@ -17,14 +17,11 @@ $(document).ready(function () {
     //While lazyloadflag is true, the user can trigger more things to load, by scrolling to the bottom of the page
     var lazyLoadFlag = false;
 
-    // copy of the above variable for lazyloading youtube videos
-    var youtubeLazyFlag = false;
-
     //Stores the most recent valid search in an object (.query .cuisine .type .numberToGet)
     var currentSearch;
 
     // this adds the cuisine drop down options in our html
-    for (var i =0; i < geographicalCusineList.length; i++) {
+    for (var i = 0; i < geographicalCusineList.length; i++) {
         $('.cuisine-select').append(`<option value="${geographicalCusineList[i]}">${geographicalCusineList[i]}</option>`);
     }
 
@@ -32,9 +29,8 @@ $(document).ready(function () {
     $("#submit-button").on("click", function () {
         event.preventDefault();
 
-        if (checkInput($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6)) 
-        {
-            currentSearch = { 'query' : $('#query-input').val(), 'cuisine': $('.cuisine-select').val(), 'type' : $('.type-select').val(), 'numberToGet' : 6};
+        if (checkInput($('#query-input').val(), $('.cuisine-select').val(), $('.type-select').val(), 6)) {
+            currentSearch = { 'query': $('#query-input').val(), 'cuisine': $('.cuisine-select').val(), 'type': $('.type-select').val(), 'numberToGet': 6 };
             console.log(currentSearch);
             listOfOnPageIds.forEach(element => {
                 $('#card-' + element).remove();
@@ -53,8 +49,7 @@ $(document).ready(function () {
     //cuisine: location it comes from.
     //type: One of the following: main course, side dish, dessert, appetizer, salad, bread, breakfast, soup, beverage, sauce, or drink.
     //offset: Unused at this point in time. Maybe look into lazy loading cards as the user srolls down? This is probably pretty complicated for both code and front end
-    function checkInput(query, cuisine, type, numberToGet) 
-    {
+    function checkInput(query, cuisine, type, numberToGet) {
         var valid = true;
 
         if (geographicalCusineList.indexOf($('.cuisine-select').val()) == -1) {
@@ -117,7 +112,7 @@ $(document).ready(function () {
             Method: 'GET',
             url: spoonacularSearchByIdURL + id + "/information?mashape-key=b2a438b504msh5c44b66f387d373p1fbdadjsn9a8aa9582250"
         }).then(function (response) {
-          
+
             if (response.image == "" || response.imageType == "") {
                 //The database fed us some bad data. Lets just skip over it.
             }
@@ -125,12 +120,12 @@ $(document).ready(function () {
                 //More garbage
             }
             else {
-                
+
                 var col = recipesCount % 2 == 0 ? "leftRecipes" : "rightRecipes";
 
                 //I wonder if there is a better way to procedurally make DOM elements? I mean, I guess this works fine.
 
-                var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)" data-toggle="modal" data-target="#exampleModalCenter"></i> <i class="far fa-heart ml-4 mr-4" id = "favorite-' + id +'" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
+                var thing = $('<div class="card" id="card-' + id + '"> <img class="card-img-top" src="' + response.image + '"> <div class="card-header text-center" id="headingOne"> <h1 class="recipe-title-area"> <a class="btn btn-link" data-toggle="collapse" data-target="#collapse' + id + '" aria-expanded="true" aria-controls="collapse' + id + '"> <span id="recipe-name">' + response.title + '</span><br> <div class="row d-flex"> <div class="p-2 flex-fill" id="servings"> Serves: <span id="recipe-servings">6</span> </div> <div class="p-2 flex-fill" id="time"> Cook Time: <span id="recipe-time">' + response.readyInMinutes + ' Minutes</span> </div> </div> </a> </h1> </div> <div id="collapse' + id + '" class="collapse" aria-labelledby="heading' + id + '" data-parent="#accordion"> <div class="card-body d-flex justify-content-center"> <i class="fas fa-link ml-4 mr-4" id = "link-' + id + '" style="font-size : 48px; color : rgb(27, 25, 25);"></i> <i class="fas fa-clipboard-list ml-4 mr-4" id = "recipe-' + id + '" style="font-size : 48px; color : rgb(137, 233, 128)" data-toggle="modal" data-target="#exampleModalCenter"></i> <i class="far fa-heart ml-4 mr-4" id = "favorite-' + id + '" style="font-size : 48px; color : rgb(228, 92, 92)"></i> </div> </div> </div>')
 
 
                 thing.appendTo($('.' + col));
@@ -143,16 +138,16 @@ $(document).ready(function () {
                 })
 
                 // This is the click that pops up your instructions modal.
-                $('#recipe-' + id).on("click", function() {
+                $('#recipe-' + id).on("click", function () {
                     console.log("Recipe: " + id);
                     $("#recipe-instructions").text(response.instructions);
                 })
 
-                $('#favorite-' + id).on("click", function(){
+                $('#favorite-' + id).on("click", function () {
                     console.log("Favorite: " + id);
                     toggleHeart($('#favorite-' + id));
 
-                    
+
                     //TODO: Add firebase something something
                 })
             }
@@ -161,7 +156,6 @@ $(document).ready(function () {
 
     function displayYoutubePlaylists(cuisineInput) {
         $('.youtube-playlists').empty();
-        youtubeLazyFlag = true;
 
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
         var youtubeQueryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
@@ -174,10 +168,13 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
 
+            pageTokenID = response.nextPageToken;
+            console.log(pageTokenID);
+
             // assigning the jquery to a variable
             var playlist = $('.youtube-playlists');
             var playlistContainer = $('<span class="playlist-container" id="playlist-name"></span>');
-            
+
             // for every response (playlist) returned:
             for (var i = 0; i < response.items.length; i++) {
 
@@ -195,15 +192,19 @@ $(document).ready(function () {
 
     // this function will run if the youtubeLazyFlag is true
     function trueFlag(cuisineInput) {
-        youtubeLazyFlag = false;
+
         var youtubeAPIkey = "AIzaSyAcW6MxYGPv_DenM4MKDSBonCRQnpMWcLE";
-        var youtubeSecondURL = "https://www.googleapis.com/youtube/v3/search?pageToken=CAUQAA&part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
+
+        var youtubeSecondURL = "https://www.googleapis.com/youtube/v3/search?pageToken=" + pageTokenID + "&part=snippet&q=" + cuisineInput + "&safeSearch=moderate&type=playlist&key=" + youtubeAPIkey;
         $.ajax({
             url: youtubeSecondURL,
             headers: { "Accept": "application/jason" },
             method: "GET"
         }).then(function (response) {
             console.log(response);
+
+            pageTokenID = response.nextPageToken;
+            console.log(pageTokenID);
 
             // assigning the jquery to a variable
             var playlist = $('.youtube-playlists');
@@ -233,7 +234,7 @@ $(document).ready(function () {
         $element.addClass('is-invalid');
     }
 
-    function toggleHeart($element){
+    function toggleHeart($element) {
         if ($element.hasClass('fas')) {
             $element.removeClass('fas').addClass('far');
         }
@@ -243,18 +244,18 @@ $(document).ready(function () {
     }
 
     $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
-        {
-            if (currentSearch != null) 
-            {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            if (currentSearch != null) {
                 if (lazyLoadFlag) {
                     offset++;
                     SearchSpoonacular(currentSearch.query, currentSearch.cuisine, currentSearch.type, 6);
                     lazyLoadFlag = false;
                 }
             }
-            if (youtubeLazyFlag) {
-                trueFlag(currentSearch.cuisine + " music");
+            if (currentSearch.cuisine != null) {
+                if ($('.youtube-playlists').height() < $('.leftRecipes').height()) {
+                    trueFlag(currentSearch.cuisine + " music");
+                }
             }
         }
     });
